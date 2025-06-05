@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Session - Go-Planner</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Mobile Menu Toggle -->
+        <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation menu">
+            <span class="material-icons">menu</span>
+        </button>
+
+        <!-- Navigation Overlay -->
+        <div class="nav-overlay" id="navOverlay"></div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <span class="material-icons">school</span>
+                <h1>Go-Planner</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><span class="material-icons">dashboard</span>Dashboard</a></li>
+                <li><a href="calendar.html"><span class="material-icons">calendar_today</span>Calendar</a></li>
+                <li><a href="study-plan.html"><span class="material-icons">edit_calendar</span>Study Plan</a></li>
+                <li><a href="session.html" class="active"><span class="material-icons">timer</span>Study Session</a></li>
+                <li><a href="progress.html"><span class="material-icons">insights</span>Progress</a></li>
+                <li><a href="settings.html"><span class="material-icons">settings</span>Settings</a></li>
+            </ul>
+            
+            <!-- Quick Theme Toggle -->
+            <div class="quick-theme-toggle">
+                <button class="theme-toggle-btn" aria-label="Toggle theme">
+                    <span class="material-icons light-icon">light_mode</span>
+                    <span class="material-icons dark-icon">dark_mode</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <div class="session-container">
+                <!-- Timer Section -->
+                <section class="timer-section card">
+                    <div class="timer-display">
+                        <div class="timer-circle">
+                            <svg class="timer-progress" viewBox="0 0 100 100">
+                                <circle class="timer-background" cx="50" cy="50" r="45"/>
+                                <circle class="timer-foreground" cx="50" cy="50" r="45"/>
+                            </svg>
+                            <div class="timer-text">
+                                <span id="timerDisplay">25:00</span>
+                                <span class="timer-label">minutes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timer-controls">
+                        <button class="btn-icon" id="resetTimer" aria-label="Reset timer">
+                            <span class="material-icons">restart_alt</span>
+                        </button>
+                        <button class="btn-primary btn-large" id="startTimer">
+                            <span class="material-icons">play_arrow</span>
+                            Start
+                        </button>
+                        <button class="btn-icon" id="skipBreak" aria-label="Skip break" disabled>
+                            <span class="material-icons">skip_next</span>
+                        </button>
+                    </div>
+                    <div class="session-info">
+                        <div class="info-item">
+                            <span class="info-label">Session</span>
+                            <span class="info-value" id="sessionCount">1/4</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Total Time</span>
+                            <span class="info-value" id="totalTime">00:00</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Session Setup and Notes -->
+                <div class="session-sidebar">
+                    <!-- Session Setup -->
+                    <section class="session-setup card">
+                        <h3>Session Setup</h3>
+                        <form id="sessionForm">
+                            <div class="form-group">
+                                <label for="subjectSelect">Subject</label>
+                                <select id="subjectSelect" required>
+                                    <!-- Subjects will be populated by JavaScript -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="topicSelect">Topic</label>
+                                <select id="topicSelect" required>
+                                    <!-- Topics will be populated by JavaScript -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="sessionDuration">Focus Duration (minutes)</label>
+                                <input type="number" id="sessionDuration" min="1" max="60" value="25" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="breakDuration">Break Duration (minutes)</label>
+                                <input type="number" id="breakDuration" min="1" max="30" value="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sessionsCount">Number of Sessions</label>
+                                <input type="number" id="sessionsCount" min="1" max="10" value="4" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Apply Settings</button>
+                        </form>
+                    </section>
+
+                    <!-- Session Notes -->
+                    <section class="session-notes card">
+                        <div class="notes-header">
+                            <h3>Session Notes</h3>
+                            <button class="btn-secondary" id="saveNotes">
+                                <span class="material-icons">save</span>
+                                Save
+                            </button>
+                        </div>
+                        <div class="notes-content">
+                            <textarea id="sessionNotes" placeholder="Take notes during your study session..."></textarea>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Break Modal -->
+    <div class="modal" id="breakModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Break Time!</h3>
+                <button class="btn-icon modal-close" aria-label="Skip break">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="break-timer">
+                <div class="timer-circle small">
+                    <svg class="timer-progress" viewBox="0 0 100 100">
+                        <circle class="timer-background" cx="50" cy="50" r="45"/>
+                        <circle class="timer-foreground" cx="50" cy="50" r="45"/>
+                    </svg>
+                    <div class="timer-text">
+                        <span id="breakTimerDisplay">05:00</span>
+                        <span class="timer-label">minutes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="skipBreakBtn">Skip Break</button>
+                <button class="btn-primary" id="startBreakBtn">Start Break</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/theme-manager.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/session.js"></script>
+    <script src="js/mobile-menu.js"></script>
+</body>
+</html> 

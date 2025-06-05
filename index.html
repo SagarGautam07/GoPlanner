@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go-Planner - Your Study Companion</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Mobile Menu Toggle -->
+        <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation menu">
+            <span class="material-icons">menu</span>
+        </button>
+
+        <!-- Navigation Overlay -->
+        <div class="nav-overlay" id="navOverlay"></div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <span class="material-icons">school</span>
+                <h1>Go-Planner</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active"><span class="material-icons">dashboard</span>Dashboard</a></li>
+                <li><a href="calendar.html"><span class="material-icons">calendar_today</span>Calendar</a></li>
+                <li><a href="study-plan.html"><span class="material-icons">edit_calendar</span>Study Plan</a></li>
+                <li><a href="session.html"><span class="material-icons">timer</span>Study Session</a></li>
+                <li><a href="progress.html"><span class="material-icons">insights</span>Progress</a></li>
+                <li><a href="settings.html"><span class="material-icons">settings</span>Settings</a></li>
+            </ul>
+            
+            <!-- Quick Theme Toggle -->
+            <div class="quick-theme-toggle">
+                <button class="theme-toggle-btn" aria-label="Toggle theme">
+                    <span class="material-icons light-icon">light_mode</span>
+                    <span class="material-icons dark-icon">dark_mode</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <div class="dashboard-container">
+                <div class="dashboard-grid">
+                    <!-- Tasks Section -->
+                    <section class="tasks-section card">
+                        <div class="section-header">
+                            <h2>Today's Tasks</h2>
+                            <button class="btn-primary add-task-btn">
+                                <span class="material-icons">add</span>
+                                Add Task
+                            </button>
+                        </div>
+                        <div class="tasks-list" id="todayTasks">
+                            <!-- Tasks will be populated by JavaScript -->
+                        </div>
+                    </section>
+
+                    <!-- Countdown Section -->
+                    <section class="countdown-section card">
+                        <div class="section-header">
+                            <h2>Upcoming Exams</h2>
+                            <button class="btn-secondary" id="viewAllExams">
+                                <span class="material-icons">event</span>
+                                View All
+                            </button>
+                        </div>
+                        <div class="countdown-cards" id="examCountdowns">
+                            <!-- Countdowns will be populated by JavaScript -->
+                        </div>
+                    </section>
+
+                    <!-- Progress Section -->
+                    <section class="progress-section card">
+                        <div class="section-header">
+                            <h2>Progress Overview</h2>
+                            <button class="btn-secondary" id="viewProgress">
+                                <span class="material-icons">analytics</span>
+                                Details
+                            </button>
+                        </div>
+                        <div class="progress-bars">
+                            <div class="progress-item">
+                                <div class="progress-header">
+                                    <label>Syllabus Completion</label>
+                                    <span class="progress-value">0%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-header">
+                                    <label>Daily Streak</label>
+                                    <div class="streak-counter">
+                                        <span class="streak-number">0</span>
+                                        <span class="streak-label">days</span>
+                                    </div>
+                                </div>
+                                <div class="streak-info">
+                                    Keep studying daily to maintain your streak!
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Motivation Section -->
+                    <section class="motivation-section card">
+                        <div class="section-header">
+                            <h2>Daily Motivation</h2>
+                            <button class="btn-icon" id="refreshQuote" aria-label="Get new quote">
+                                <span class="material-icons">refresh</span>
+                            </button>
+                        </div>
+                        <div class="quote-container" id="motivationalQuote">
+                            <!-- Quote will be populated by JavaScript -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/theme-manager.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/mobile-menu.js"></script>
+</body>
+</html> 

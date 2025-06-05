@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Plan - Go-Planner</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Mobile Menu Toggle -->
+        <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation menu">
+            <span class="material-icons">menu</span>
+        </button>
+
+        <!-- Navigation Overlay -->
+        <div class="nav-overlay" id="navOverlay"></div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <span class="material-icons">school</span>
+                <h1>Go-Planner</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><span class="material-icons">dashboard</span>Dashboard</a></li>
+                <li><a href="calendar.html"><span class="material-icons">calendar_today</span>Calendar</a></li>
+                <li><a href="study-plan.html" class="active"><span class="material-icons">edit_calendar</span>Study Plan</a></li>
+                <li><a href="session.html"><span class="material-icons">timer</span>Study Session</a></li>
+                <li><a href="progress.html"><span class="material-icons">insights</span>Progress</a></li>
+                <li><a href="settings.html"><span class="material-icons">settings</span>Settings</a></li>
+            </ul>
+            
+            <!-- Quick Theme Toggle -->
+            <div class="quick-theme-toggle">
+                <button class="theme-toggle-btn" aria-label="Toggle theme">
+                    <span class="material-icons light-icon">light_mode</span>
+                    <span class="material-icons dark-icon">dark_mode</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <div class="study-plan-container">
+                <!-- Plan Creation Form -->
+                <section class="plan-creation card">
+                    <div class="section-header">
+                        <h2>Create Study Plan</h2>
+                        <p class="text-muted">Set up your exam details and study preferences</p>
+                    </div>
+
+                    <form id="studyPlanForm">
+                        <!-- Exam Details -->
+                        <div class="form-section">
+                            <h3>
+                                <button type="button" class="toggle-section" data-section="examDetails">
+                                    <span class="material-icons">expand_less</span>
+                                    Exam Details
+                                </button>
+                            </h3>
+                            <div id="examDetails" class="section-content">
+                                <div class="form-group">
+                                    <label for="examSubject">Subject</label>
+                                    <input type="text" id="examSubject" required placeholder="Enter exam subject">
+                                </div>
+                                <div class="form-group">
+                                    <label for="examDate">Exam Date</label>
+                                    <input type="date" id="examDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="examDifficulty">Difficulty Level</label>
+                                    <select id="examDifficulty" required>
+                                        <option value="easy">Easy</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="hard">Hard</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Topics -->
+                        <div class="form-section">
+                            <h3>
+                                <button type="button" class="toggle-section" data-section="topicsSection">
+                                    <span class="material-icons">expand_less</span>
+                                    Topics to Study
+                                </button>
+                            </h3>
+                            <div id="topicsSection" class="section-content">
+                                <div id="topicsContainer"></div>
+                                <button type="button" id="addTopic" class="btn-secondary">
+                                    <span class="material-icons">add</span>
+                                    Add Topic
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Schedule Preferences -->
+                        <div class="form-section">
+                            <h3>
+                                <button type="button" class="toggle-section" data-section="schedulePrefs">
+                                    <span class="material-icons">expand_less</span>
+                                    Schedule Preferences
+                                </button>
+                            </h3>
+                            <div id="schedulePrefs" class="section-content">
+                                <div class="form-group">
+                                    <label>Preferred Study Days</label>
+                                    <div class="weekday-selector">
+                                        <label><input type="checkbox" value="0"> Sun</label>
+                                        <label><input type="checkbox" value="1"> Mon</label>
+                                        <label><input type="checkbox" value="2"> Tue</label>
+                                        <label><input type="checkbox" value="3"> Wed</label>
+                                        <label><input type="checkbox" value="4"> Thu</label>
+                                        <label><input type="checkbox" value="5"> Fri</label>
+                                        <label><input type="checkbox" value="6"> Sat</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="studyHoursPerDay">Study Hours per Day</label>
+                                    <input type="number" id="studyHoursPerDay" min="1" max="12" value="4" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="breakDuration">Break Duration (minutes)</label>
+                                    <input type="number" id="breakDuration" min="5" max="60" value="15" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" id="generatePlan" class="btn-primary">
+                                <span class="material-icons">auto_awesome</span>
+                                Generate Study Plan
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Generated Plan -->
+                <section class="generated-plan card">
+                    <div class="section-header">
+                        <h2>Your Study Plan</h2>
+                        <div class="plan-actions">
+                            <button class="btn-secondary" id="exportPlan">
+                                <span class="material-icons">file_download</span>
+                                Export
+                            </button>
+                            <button class="btn-secondary" id="sharePlan">
+                                <span class="material-icons">share</span>
+                                Share
+                            </button>
+                        </div>
+                    </div>
+                    <div id="planTimeline" class="timeline-container">
+                        <!-- Plan will be populated by JavaScript -->
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Topic Template -->
+    <template id="topicTemplate">
+        <div class="topic-content">
+            <div class="form-group">
+                <input type="text" class="topic-name" placeholder="Topic name" required>
+            </div>
+            <div class="form-group">
+                <input type="number" class="topic-hours" placeholder="Hours needed" min="1" required>
+            </div>
+            <button type="button" class="btn-icon remove-topic" aria-label="Remove topic">
+                <span class="material-icons">delete</span>
+            </button>
+        </div>
+    </template>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/theme-manager.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/study-plan.js"></script>
+    <script src="js/mobile-menu.js"></script>
+</body>
+</html> 

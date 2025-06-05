@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Go-Planner</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Mobile Menu Toggle -->
+        <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation menu">
+            <span class="material-icons">menu</span>
+        </button>
+
+        <!-- Navigation Overlay -->
+        <div class="nav-overlay" id="navOverlay"></div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <span class="material-icons">school</span>
+                <h1>Go-Planner</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html"><span class="material-icons">dashboard</span>Dashboard</a></li>
+                <li><a href="calendar.html"><span class="material-icons">calendar_today</span>Calendar</a></li>
+                <li><a href="study-plan.html"><span class="material-icons">edit_calendar</span>Study Plan</a></li>
+                <li><a href="session.html"><span class="material-icons">timer</span>Study Session</a></li>
+                <li><a href="progress.html"><span class="material-icons">insights</span>Progress</a></li>
+                <li><a href="settings.html" class="active"><span class="material-icons">settings</span>Settings</a></li>
+            </ul>
+            
+            <!-- Quick Theme Toggle -->
+            <div class="quick-theme-toggle">
+                <button class="theme-toggle-btn" aria-label="Toggle theme">
+                    <span class="material-icons light-icon">light_mode</span>
+                    <span class="material-icons dark-icon">dark_mode</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <div class="settings-container">
+                <section class="notifications-section card">
+                    <h2>Notifications</h2>
+                    <div class="notification-settings">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>Study Reminders</h3>
+                                <p class="text-muted">Get notified when it's time to study</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="studyReminders" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>Break Reminders</h3>
+                                <p class="text-muted">Get notified when it's time to take a break</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="breakReminders" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>Progress Updates</h3>
+                                <p class="text-muted">Weekly summary of your study progress</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="progressUpdates">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="theme-section card">
+                    <h2>Theme Settings</h2>
+                    <div class="theme-options">
+                        <div class="theme-mode">
+                            <h3>Theme Mode</h3>
+                            <div class="theme-buttons">
+                                <button class="theme-button" data-theme="light-theme">
+                                    <span class="material-icons">light_mode</span>
+                                    Light
+                                </button>
+                                <button class="theme-button" data-theme="dark-theme">
+                                    <span class="material-icons">dark_mode</span>
+                                    Dark
+                                </button>
+                                <button class="theme-button" data-theme="high-contrast-theme">
+                                    <span class="material-icons">contrast</span>
+                                    High Contrast
+                                </button>
+                            </div>
+                        </div>
+                        <div class="color-themes">
+                            <h3>Color Theme</h3>
+                            <div class="color-options">
+                                <button class="color-option" data-theme="theme-blue">Blue</button>
+                                <button class="color-option" data-theme="theme-green">Green</button>
+                                <button class="color-option" data-theme="theme-purple">Purple</button>
+                                <button class="color-option" data-theme="theme-orange">Orange</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="data-section card">
+                    <h2>Data Management</h2>
+                    <div class="data-actions">
+                        <button class="btn-secondary" id="exportData">
+                            <span class="material-icons">file_download</span>
+                            Export Data
+                        </button>
+                        <button class="btn-secondary" id="importData">
+                            <span class="material-icons">file_upload</span>
+                            Import Data
+                        </button>
+                        <button class="btn-danger" id="clearData">
+                            <span class="material-icons">delete_forever</span>
+                            Clear All Data
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/theme-manager.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/mobile-menu.js"></script>
+</body>
+</html> 

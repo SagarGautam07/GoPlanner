@@ -1,0 +1,209 @@
+/* Theme Transition */
+:root {
+    --theme-transition-duration: 0.3s;
+    --theme-transition-timing: ease-in-out;
+}
+
+/* Global Theme Transition */
+.theme-transitioning,
+.theme-transitioning * {
+    transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
+                color var(--theme-transition-duration) var(--theme-transition-timing),
+                border-color var(--theme-transition-duration) var(--theme-transition-timing),
+                box-shadow var(--theme-transition-duration) var(--theme-transition-timing) !important;
+}
+
+/* Light Theme (Default) */
+.light-theme {
+    --primary-color: #4a90e2;
+    --secondary-color: #f39c12;
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
+    --warning-color: #f1c40f;
+    --text-color: #2c3e50;
+    --text-muted: #7f8c8d;
+    --bg-color: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --nav-bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --border-color: #e1e1e1;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --hover-bg: #f5f5f5;
+    --input-bg: #ffffff;
+    --input-border: #e1e1e1;
+    --input-focus: #4a90e2;
+    --scrollbar-bg: #f1f1f1;
+    --scrollbar-thumb: #c1c1c1;
+}
+
+/* Dark Theme */
+.dark-theme {
+    --primary-color: #60a5fa;
+    --secondary-color: #fbbf24;
+    --success-color: #34d399;
+    --danger-color: #ef4444;
+    --warning-color: #fcd34d;
+    --text-color: #e5e7eb;
+    --text-muted: #9ca3af;
+    --bg-color: #1f2937;
+    --bg-secondary: #111827;
+    --nav-bg: #111827;
+    --card-bg: #374151;
+    --border-color: #4b5563;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --hover-bg: #2d3748;
+    --input-bg: #374151;
+    --input-border: #4b5563;
+    --input-focus: #60a5fa;
+    --scrollbar-bg: #1f2937;
+    --scrollbar-thumb: #4b5563;
+}
+
+/* High Contrast Theme */
+.high-contrast-theme {
+    --primary-color: #0066cc;
+    --secondary-color: #ff6600;
+    --success-color: #008000;
+    --danger-color: #cc0000;
+    --warning-color: #ffcc00;
+    --text-color: #000000;
+    --text-muted: #666666;
+    --bg-color: #ffffff;
+    --bg-secondary: #f0f0f0;
+    --nav-bg: #f0f0f0;
+    --card-bg: #ffffff;
+    --border-color: #000000;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --hover-bg: #e6e6e6;
+    --input-bg: #ffffff;
+    --input-border: #000000;
+    --input-focus: #0066cc;
+    --scrollbar-bg: #f0f0f0;
+    --scrollbar-thumb: #000000;
+}
+
+/* Custom Color Themes */
+.theme-blue {
+    --primary-color: #3b82f6;
+    --secondary-color: #60a5fa;
+    --accent-color: #2563eb;
+}
+
+.theme-green {
+    --primary-color: #10b981;
+    --secondary-color: #34d399;
+    --accent-color: #059669;
+}
+
+.theme-purple {
+    --primary-color: #8b5cf6;
+    --secondary-color: #a78bfa;
+    --accent-color: #7c3aed;
+}
+
+.theme-orange {
+    --primary-color: #f97316;
+    --secondary-color: #fb923c;
+    --accent-color: #ea580c;
+}
+
+/* Theme-specific Component Styles */
+/* Cards */
+.dark-theme .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+/* Navigation */
+.dark-theme .nav-links a:hover,
+.dark-theme .nav-links a.active {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+}
+
+/* Progress Bars */
+.dark-theme .progress-bar {
+    background: var(--bg-secondary);
+}
+
+/* Forms and Inputs */
+.dark-theme input,
+.dark-theme select,
+.dark-theme textarea {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--text-color);
+}
+
+.dark-theme input:focus,
+.dark-theme select:focus,
+.dark-theme textarea:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 2px var(--input-focus);
+}
+
+/* Buttons */
+.dark-theme button {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.dark-theme button:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Scrollbars */
+.dark-theme::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+}
+
+.dark-theme::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+}
+
+/* Focus Styles */
+.dark-theme *:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Theme Switch Animation */
+@keyframes themeSwitch {
+    0% { opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+.theme-switching {
+    animation: themeSwitch var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* Theme Toggle Button States */
+.theme-toggle-btn .light-icon {
+    display: none;
+}
+
+.theme-toggle-btn .dark-icon {
+    display: inline-block;
+}
+
+.dark-theme .theme-toggle-btn .light-icon {
+    display: inline-block;
+}
+
+.dark-theme .theme-toggle-btn .dark-icon {
+    display: none;
+} 
