@@ -9,37 +9,92 @@ class ThemeManager {
 
     initialize() {
         // Apply saved themes on page load
-        this.applyTheme(
-            localStorage.getItem(this.themeKey) || 'light-theme',
-            localStorage.getItem(this.customThemeKey) || ''
-        );
+        const savedTheme = localStorage.getItem(this.themeKey) || 'light-theme';
+        const savedCustomTheme = localStorage.getItem(this.customThemeKey) || '';
+        
+        // Apply themes
+        this.applyTheme(savedTheme, savedCustomTheme);
+
+        // Setup theme toggle button
+        this.setupThemeToggle();
 
         // Listen for system theme changes
         this.setupSystemThemeListener();
 
         // Setup theme transition observer
         this.setupTransitionObserver();
+
+        // Log initial state
+        console.log('Theme Manager initialized:', {
+            theme: savedTheme,
+            customTheme: savedCustomTheme,
+            bodyClasses: document.body.className
+        });
+    }
+
+    setupThemeToggle() {
+        const themeToggleBtn = document.querySelector('.theme-toggle-btn');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const currentTheme = localStorage.getItem(this.themeKey) || 'light-theme';
+                const newTheme = currentTheme === 'light-theme' ? 'dark-theme' : 'light-theme';
+                this.applyTheme(newTheme, localStorage.getItem(this.customThemeKey) || '');
+            });
+        }
     }
 
     applyTheme(theme, customTheme = '') {
+        console.log('Applying theme:', { theme, customTheme });
+
+        // Store current scroll position
+        const scrollPosition = window.scrollY;
+
+        // Add transition class
         document.documentElement.classList.add('theme-transitioning');
         
-        // Remove all existing themes
-        document.body.className = '';
-        
-        // Apply main theme
-        document.body.classList.add(theme);
-        localStorage.setItem(this.themeKey, theme);
-        
-        // Apply custom theme if present
-        if (customTheme) {
-            document.body.classList.add(customTheme);
-            localStorage.setItem(this.customThemeKey, customTheme);
+        try {
+            // Remove all theme classes
+            const themeClasses = ['light-theme', 'dark-theme', 'high-contrast-theme', 
+                                'theme-blue', 'theme-green', 'theme-purple', 'theme-orange'];
+            document.body.classList.remove(...themeClasses);
+            
+            // Apply main theme
+            document.body.classList.add(theme);
+            localStorage.setItem(this.themeKey, theme);
+            
+            // Apply custom theme if present
+            if (customTheme) {
+                document.body.classList.add(customTheme);
+                localStorage.setItem(this.customThemeKey, customTheme);
+            } else {
+                localStorage.removeItem(this.customThemeKey);
+            }
+
+            // Update theme toggle button
+            const themeToggleBtn = document.querySelector('.theme-toggle-btn');
+            if (themeToggleBtn) {
+                themeToggleBtn.setAttribute('aria-label', 
+                    theme === 'light-theme' ? 'Switch to dark theme' : 'Switch to light theme'
+                );
+            }
+
+            // Update theme buttons if on settings page
+            this.updateThemeButtons(theme, customTheme);
+
+            console.log('Theme applied successfully:', {
+                theme,
+                customTheme,
+                bodyClasses: document.body.className
+            });
+        } catch (error) {
+            console.error('Error applying theme:', error);
         }
 
-        // Remove transition class after animation
+        // Remove transition class and restore scroll position
         setTimeout(() => {
             document.documentElement.classList.remove('theme-transitioning');
+            window.scrollTo(0, scrollPosition);
         }, this.transitionDuration);
 
         // Dispatch theme change event
@@ -48,8 +103,23 @@ class ThemeManager {
         }));
     }
 
+    updateThemeButtons(theme, customTheme) {
+        // Update theme mode buttons
+        document.querySelectorAll('.theme-button').forEach(button => {
+            const isActive = button.dataset.theme === theme;
+            button.classList.toggle('active', isActive);
+            button.setAttribute('aria-pressed', isActive);
+        });
+
+        // Update color theme buttons
+        document.querySelectorAll('.color-option').forEach(button => {
+            const isActive = button.dataset.theme === customTheme;
+            button.classList.toggle('active', isActive);
+            button.setAttribute('aria-pressed', isActive);
+        });
+    }
+
     setupSystemThemeListener() {
-        // Listen for system theme changes if no theme is set
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         mediaQuery.addEventListener('change', (e) => {
             if (!localStorage.getItem(this.themeKey)) {
@@ -59,7 +129,6 @@ class ThemeManager {
     }
 
     setupTransitionObserver() {
-        // Observe theme-related class changes and ensure smooth transitions
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.attributeName === 'class') {
@@ -90,12 +159,11 @@ class ThemeManager {
     static setTheme(theme, isCustomTheme = false) {
         const manager = ThemeManager.getInstance();
         if (isCustomTheme) {
-            manager.applyTheme(
-                localStorage.getItem(manager.themeKey) || 'light-theme',
-                theme
-            );
+            const currentTheme = localStorage.getItem(manager.themeKey) || 'light-theme';
+            manager.applyTheme(currentTheme, theme);
         } else {
-            manager.applyTheme(theme);
+            const currentCustomTheme = localStorage.getItem(manager.customThemeKey) || '';
+            manager.applyTheme(theme, currentCustomTheme);
         }
     }
 

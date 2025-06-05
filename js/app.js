@@ -1,7 +1,5 @@
 // App State Management
 const AppState = {
-    theme: localStorage.getItem('theme') || 'light-theme',
-    customTheme: localStorage.getItem('customTheme') || '',
     notifications: JSON.parse(localStorage.getItem('notifications') ?? 'true'),
     userProfile: JSON.parse(localStorage.getItem('userProfile') || '{"name":"Student","avatar":null}'),
     tasks: JSON.parse(localStorage.getItem('tasks') || '[]'),
@@ -35,37 +33,6 @@ const StateEvents = {
         }
     }
 };
-
-// Theme Management with Transitions
-function initializeTheme() {
-    document.body.className = AppState.theme;
-    if (AppState.customTheme) {
-        document.body.classList.add(AppState.customTheme);
-    }
-    document.documentElement.style.setProperty('--transition-speed', '0.3s');
-}
-
-function setTheme(theme, isCustomTheme = false) {
-    document.body.classList.add('theme-transition');
-    
-    if (isCustomTheme) {
-        AppState.customTheme = theme;
-        saveToLocalStorage('customTheme', theme);
-        document.body.className = AppState.theme;
-        document.body.classList.add(theme);
-    } else {
-        AppState.theme = theme;
-        saveToLocalStorage('theme', theme);
-        document.body.className = theme;
-        if (AppState.customTheme) {
-            document.body.classList.add(AppState.customTheme);
-        }
-    }
-    
-    setTimeout(() => {
-        document.body.classList.remove('theme-transition');
-    }, 300);
-}
 
 // Enhanced Notification System
 function showNotification(message, type = 'info', duration = 3000) {
@@ -231,7 +198,6 @@ window.AppUtils = {
     updateTask,
     deleteTask,
     updateStreak,
-    setTheme,
     saveToLocalStorage,
     getFromLocalStorage
 }; 
