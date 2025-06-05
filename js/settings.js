@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Initialize Settings
 function initializeSettings() {
     loadUserProfile();
-    loadThemeSettings();
     loadNotificationSettings();
+    loadThemeSettings();
 }
 
 // Event Listeners Setup
@@ -20,15 +20,43 @@ function setupEventListeners() {
 
     // Theme Settings
     document.querySelectorAll('.theme-button').forEach(button => {
-        button.addEventListener('click', () => setThemeMode(button.dataset.theme));
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const theme = button.dataset.theme;
+            console.log('Theme button clicked:', theme);
+            setThemeMode(theme);
+            
+            // Update active states
+            document.querySelectorAll('.theme-button').forEach(btn => {
+                btn.classList.toggle('active', btn === button);
+                btn.setAttribute('aria-pressed', btn === button);
+            });
+        });
     });
 
     document.querySelectorAll('.color-option').forEach(button => {
-        button.addEventListener('click', () => setColorTheme(button.dataset.theme));
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const theme = button.dataset.theme;
+            console.log('Color theme button clicked:', theme);
+            setColorTheme(theme);
+            
+            // Update active states
+            document.querySelectorAll('.color-option').forEach(btn => {
+                btn.classList.toggle('active', btn === button);
+                btn.setAttribute('aria-pressed', btn === button);
+            });
+        });
     });
 
     // Quick Theme Toggle
-    document.querySelector('.theme-toggle-btn').addEventListener('click', toggleTheme);
+    const themeToggleBtn = document.querySelector('.theme-toggle-btn');
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleTheme();
+        });
+    }
 
     // Notification Settings
     document.querySelectorAll('.toggle-switch input').forEach(toggle => {
@@ -36,9 +64,9 @@ function setupEventListeners() {
     });
 
     // Data Management
-    document.getElementById('exportData').addEventListener('click', handleDataExport);
-    document.getElementById('importData').addEventListener('click', handleDataImport);
-    document.getElementById('clearData').addEventListener('click', handleDataClear);
+    document.getElementById('exportData')?.addEventListener('click', handleDataExport);
+    document.getElementById('importData')?.addEventListener('click', handleDataImport);
+    document.getElementById('clearData')?.addEventListener('click', handleDataClear);
 }
 
 // Profile Management
@@ -86,51 +114,38 @@ function updateUserProfile(updates = {}) {
 // Theme Management
 function loadThemeSettings() {
     const currentTheme = ThemeManager.getCurrentTheme();
+    console.log('Current theme:', currentTheme);
     
     // Set active theme mode button
     document.querySelectorAll('.theme-button').forEach(button => {
-        button.classList.toggle('active', button.dataset.theme === currentTheme.theme);
+        const isActive = button.dataset.theme === currentTheme.theme;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', isActive);
     });
 
     // Set active color theme
     document.querySelectorAll('.color-option').forEach(button => {
-        button.classList.toggle('active', button.dataset.theme === currentTheme.customTheme);
+        const isActive = button.dataset.theme === currentTheme.customTheme;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', isActive);
     });
-
-    // Update theme toggle button state
-    updateThemeToggleButton(currentTheme.theme);
 }
 
 function setThemeMode(theme) {
+    console.log('Setting theme mode:', theme);
     ThemeManager.setTheme(theme);
-    updateThemeToggleButton(theme);
-    
-    // Update theme buttons
-    document.querySelectorAll('.theme-button').forEach(button => {
-        button.classList.toggle('active', button.dataset.theme === theme);
-    });
 }
 
 function setColorTheme(theme) {
+    console.log('Setting color theme:', theme);
     ThemeManager.setTheme(theme, true);
-    
-    // Update color theme buttons
-    document.querySelectorAll('.color-option').forEach(button => {
-        button.classList.toggle('active', button.dataset.theme === theme);
-    });
 }
 
 function toggleTheme() {
     const currentTheme = ThemeManager.getCurrentTheme();
     const newTheme = currentTheme.theme === 'dark-theme' ? 'light-theme' : 'dark-theme';
+    console.log('Toggling theme from', currentTheme.theme, 'to', newTheme);
     setThemeMode(newTheme);
-}
-
-function updateThemeToggleButton(theme) {
-    const toggleBtn = document.querySelector('.theme-toggle-btn');
-    if (toggleBtn) {
-        toggleBtn.setAttribute('aria-label', `Switch to ${theme === 'dark-theme' ? 'light' : 'dark'} theme`);
-    }
 }
 
 // Notification Management
