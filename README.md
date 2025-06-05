@@ -56,8 +56,8 @@ Go-Planner is a modern, feature-rich web application designed to help students o
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/go-planner.git
-cd go-planner
+git clone https://github.com/SagarGautam07/GoPlanner.git
+cd GoPlanner
 ```
 
 2. Start a local web server:
@@ -152,9 +152,6 @@ go-planner/
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
 
